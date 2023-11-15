@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+
+<AnchorPane prefHeight="607.0" prefWidth="1176.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Appointments">
+    <children>
+        <AnchorPane layoutX="10.0" layoutY="10.0" prefHeight="595.0" prefWidth="1162.0">
+            <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" height="616.0" layoutX="-10.0" layoutY="-15.0" opacity="0.79" stroke="BLACK" strokeType="INSIDE" width="1178.0">
+               <fill>
+                  <LinearGradient endX="1.0" endY="1.0">
+                     <stops>
+                        <Stop>
+                           <color>
+                              <Color red="1.0" green="1.0" blue="1.0" />
+                           </color>
+                        </Stop>
+                        <Stop offset="1.0">
+                           <color>
+                              <Color red="0.4699999988079071" green="0.4699999988079071" blue="0.4699999988079071" opacity="0.6608695387840271" />
+                           </color>
+                        </Stop>
+                     </stops>
+                  </LinearGradient>
+               </fill>
+            </Rectangle>
+                <GridPane layoutX="50.0" layoutY="447.0" prefHeight="39.0" prefWidth="299.0">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="131.0" minWidth="10.0" prefWidth="106.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="118.0" minWidth="10.0" prefWidth="105.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="90.0" minWidth="10.0" prefWidth="76.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Button fx:id="appointDeleteLabel" mnemonicParsing="false" onAction="#actionAppointDelete" prefHeight="25.0" prefWidth="80.0" text="Delete" GridPane.columnIndex="2" />
+                        <Button fx:id="appointAddLabel" mnemonicParsing="false" onAction="#actionAppointAdd" prefHeight="25.0" prefWidth="80.0" text="Add" GridPane.columnIndex="1" />
+                        <Button fx:id="appointUpdateLabel" mnemonicParsing="false" onAction="#actionAppointUpdate" prefHeight="25.0" prefWidth="80.0" text="Update" />
+                    </children>
+                </GridPane>
+                <TableView fx:id="appointTable" layoutX="50.0" layoutY="48.0" prefHeight="386.0" prefWidth="1066.0">
+                    <columns>
+                        <TableColumn fx:id="appointIdCol" prefWidth="102.98181533813477" text="Appointment ID" />
+                        <TableColumn fx:id="appointTitleCol" prefWidth="64.58184814453125" text="Title" />
+                        <TableColumn fx:id="appointDescriptionCol" prefWidth="118.69090270996094" text="Description" />
+                        <TableColumn fx:id="appointLocationCol" prefWidth="126.54541015625" text="Location" />
+                        <TableColumn fx:id="appointContactCol" prefWidth="117.81832885742188" text="Contact" />
+                        <TableColumn fx:id="appointTypeCol" prefWidth="90.763671875" text="Type" />
+                        <TableColumn fx:id="appointDateCol" prefWidth="122.1817626953125" text="Start Date/Time" />
+                        <TableColumn fx:id="appointEndDateCol" prefWidth="126.54541015625" text="End Date/Time" />
+                        <TableColumn fx:id="appointCustIdCol" prefWidth="98.6180419921875" text="Customer ID" />
+                        <TableColumn fx:id="appointUserIdCol" prefWidth="82.9090576171875" text="User ID" />
+                    </columns>
+                </TableView>
+                <RadioButton layoutX="358.0" layoutY="19.0" mnemonicParsing="false" onAction="#allAppointments" selected="true" text="All Appointments">
+                    <toggleGroup>
+                        <ToggleGroup fx:id="appointmentView" />
+                    </toggleGroup></RadioButton>
+                <RadioButton layoutX="640.0" layoutY="18.0" mnemonicParsing="false" onAction="#monthlyAppointments" text="Month" toggleGroup="$appointmentView" />
+                <RadioButton layoutX="532.0" layoutY="18.0" mnemonicParsing="false" onAction="#weeklyAppointments" text="Week" toggleGroup="$appointmentView" />
+            </children>
+        </AnchorPane>
+        <Button layoutX="992.0" layoutY="556.0" mnemonicParsing="false" onAction="#backToMenu" prefHeight="25.0" prefWidth="114.0" text="Back to Menu" />
+    </children>
+</AnchorPane>
