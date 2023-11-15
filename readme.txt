@@ -1,12 +1,12 @@
-	•	Title: C195 - Appointment Scheduler
-	•	Purpose: Login system with the ability to access the existing SQL database with functionality to update/ add/ delete appointments and customer info. (Support English/ French language for application alert, a system restart may be required)
-	•	Author: Bao Tran
-	•	Student ID# 001683938
-	•	Application Version 1.1
-	•	Date: 11/14/2023
-	•	IDE: IntelliJ IDEA 2023.2.2 (Community Edition) x64
-	•	JDK version: Java 17.0.1
-	•	JavaFX version: JAVAFX.SDK.17.0.1
+Title: C195 - Appointment Scheduler
+Purpose: Login system with the ability to access the existing SQL database with functionality to update/ add/ delete appointments and customer info. (Support English/ French language for application alert, a system restart may be required)
+Author: Bao Tran
+Student ID# 001683938
+Application Version 1.1
+Date: 11/14/2023
+IDE: IntelliJ IDEA 2023.2.2 (Community Edition) x64
+JDK version: Java 17.0.1
+JavaFX version: JAVAFX.SDK.17.0.1
 
 INSTRUCTION:
 How to run the program:
