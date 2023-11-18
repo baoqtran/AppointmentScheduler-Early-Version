@@ -8,10 +8,11 @@ import model.Country;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-/**
- * Contact SQL queries to obtain country information from database
- */
 
+/**
+ * Country SQL queries to obtain country information from database
+ *
+ */
 public class CountryDAO {
 
     /**
@@ -62,28 +63,5 @@ public class CountryDAO {
             throw new RuntimeException(e);
         }
 
-    }
-
-    /**
-     * ObservableList that displays the country totals and the number of customers per country for reports page
-     *
-     * @return customerCountry
-     */
-    public static ObservableList<Country> countryTotals() {
-        ObservableList<Country> customerCountry = FXCollections.observableArrayList();
-        try {
-            String sql = "SELECT countries.Country, COUNT(customers.Customer_ID) AS Count FROM countries INNER JOIN first_level_divisions ON  countries.Country_ID = first_level_divisions.Country_ID INNER JOIN customers ON customers.Division_ID = first_level_divisions.Division_ID group by countries.Country";
-            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                String countryMonth = rs.getString("Country");
-                int countryMonthTotal = rs.getInt("Count");
-                Country results = new Country(countryMonth, countryMonthTotal);
-                customerCountry.add(results);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return customerCountry;
     }
 }

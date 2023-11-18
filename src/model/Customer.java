@@ -3,9 +3,9 @@ package model;
 import java.time.LocalDateTime;
 
 /**
- Model for Customer
+ * Model for Customers
+ *
  */
-
 public class Customer {
     private String customerName;
     private String customerAddress;
@@ -27,6 +27,25 @@ public class Customer {
     }
 
 
+//    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone,
+//                    String createdBy, String lastUpdatedBy, int customerDivisionId, String customerDivisionName, int customerCountryId) {
+//        this.customerId = customerId;
+//        this.customerName = customerName;
+//        this.customerAddress = customerAddress;
+//        this.customerPostalCode = customerPostalCode;
+//        this.customerDivisionId = customerDivisionId;
+//        this.customerDivisionName = customerDivisionName;
+//        this.customerCountryId = customerCountryId;
+//        this.customerPhone = customerPhone;
+//        this.createdBy = createdBy;
+//        this.lastUpdated = lastUpdated;
+//        this.lastUpdatedBy = lastUpdatedBy;
+//
+//    }
+
+
+    // private static ObservableList<Customer> customerList = CustomerDAO.getCustomerList();
+
     public Customer(String customerName, String customerAddress, String customerPostalCode, String customerPhone, String createdBy, String lastUpdatedBy, int customerDivisionId, String customerDivisionName, int customerCountryId, String customerCountryName, int customerId) {
         this.customerId = customerId;
         this.customerName = customerName;
@@ -42,7 +61,36 @@ public class Customer {
         this.lastUpdatedBy = lastUpdatedBy;
     }
 
+    public Customer(String customerName, String customerAddress, String customerPostalCode, String customerPhone, String lastUpdatedBy, int customerDivisionId) {
 
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.customerPostalCode = customerPostalCode;
+        this.customerDivisionId = customerDivisionId;
+        this.customerPhone = customerPhone;
+        this.lastUpdated = lastUpdated;
+        this.lastUpdatedBy = lastUpdatedBy;
+    }
+//
+//    public Customer(int customerId, String customerName, String customerAddress, String customerPostalCode, String customerPhone, String lastUpdatedBy, Timestamp lastUpdated, int customerDivisionId, int countryId) {
+//        this.customerId = customerId;
+//        this.customerName = customerName;
+//        this.customerAddress = customerAddress;
+//        this.customerPostalCode = customerPostalCode;
+//        this.customerDivisionId = customerDivisionId;
+//        this.customerDivisionName = customerDivisionName;
+//        this.customerCountryId = customerCountryId;
+//        this.customerPhone = customerPhone;
+//       this.createdBy = createdBy;
+//     //   this.lastUpdated = lastUpdated;
+//        this.lastUpdatedBy = lastUpdatedBy;
+//    }
+
+    // public static void updateCustomer(int Index, Customer customer){
+    //       customerList.set(Index, customer);
+
+
+    //   }
     public String getCustomerDivisionName() {
         return customerDivisionName;
     }
@@ -187,6 +235,28 @@ public class Customer {
      */
     public void setCustomerPhone(String customerPhone) {
         this.customerPhone = customerPhone;
+    }
+
+    public boolean isValid() throws Exception {
+        try {
+            if (this.customerName.isEmpty()) {
+                throw new Exception(("Please enter customer name."));
+            }
+            if (this.customerPhone.isEmpty()) {
+                throw new Exception(("Please enter customer phone number."));
+            }
+            if (this.customerAddress.isEmpty()) {
+                throw new Exception(("Please enter customer address."));
+            }  if (this.customerPostalCode.isEmpty()) {
+                throw new Exception(("Please enter customer postal code."));
+            }
+            if (this.customerDivisionId < 1 || this.customerDivisionId > 104) {
+                throw new Exception(("Please select valid division id"));
+            }
+        } catch (NumberFormatException e) {
+            throw new RuntimeException(e);
+        }
+        return true;
     }
 
     /**

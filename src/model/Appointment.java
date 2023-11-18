@@ -1,14 +1,9 @@
 package model;
+
 import DAO.AppointmentDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.time.LocalDate;
@@ -16,18 +11,18 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Objects;
 
 /**
- * Model for Appointment
- * */
-
+ * Model class for Appointments
+ *
+ */
 public class Appointment {
+
 
     private int appointmentId;
     private String appointmentTitle;
     private String appointmentDescription;
-    private int appointmentContact;
+    private int appointmentTech;
     private String appointmentType;
     private LocalDateTime appointmentStart;
     public long appointmentStart1;
@@ -36,7 +31,67 @@ public class Appointment {
     private int appointmentUserId;
     private String appointmentLocation;
     private int appointmentTypeTotal;
-    private String appointmentContactName;
+    private String appointmentTechName;
+    private String appointmentCustomerName;
+    private String appointmentUserName;
+    private int appointmentAnimalId;
+    private String appointmentAnimalName;
+
+    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, int appointmentUserId, int appointmentTech, int appointmentAnimalId) {
+        this.appointmentId = appointmentId;
+        this.appointmentTitle = appointmentTitle;
+        this.appointmentDescription = appointmentDescription;
+        this.appointmentType = appointmentType;
+        this.appointmentStart = appointmentStart;
+        this.appointmentEnd = appointmentEnd;
+        this.appointmentCustomerId = appointmentCustomerId;
+        this.appointmentUserId = appointmentUserId;
+        this.appointmentTech = appointmentTech;
+        this.appointmentAnimalId = appointmentAnimalId;
+    }
+
+
+    public String getAppointmentAnimalName() {
+        return appointmentAnimalName;
+    }
+
+    public void setAppointmentAnimalName(String appointmentAnimalName) {
+        this.appointmentAnimalName = appointmentAnimalName;
+    }
+
+    //valid
+    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentTech, String appointmentTechName, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, String appointmentCustomerName, int appointmentAnimalId, String appointmentAnimalName, int appointmentUserId, String appointmentUserName) {
+        this.appointmentId = appointmentId;
+        this.appointmentTitle = appointmentTitle;
+        this.appointmentDescription = appointmentDescription;
+        this.appointmentTech = appointmentTech;
+        this.appointmentTechName = appointmentTechName;
+        this.appointmentType = appointmentType;
+        this.appointmentStart = appointmentStart;
+        this.appointmentEnd = appointmentEnd;
+        this.appointmentCustomerId = appointmentCustomerId;
+        this.appointmentCustomerName = appointmentCustomerName;
+        this.appointmentAnimalId = appointmentAnimalId;
+        this.appointmentAnimalName = appointmentAnimalName;
+        this.appointmentUserId = appointmentUserId;
+        this.appointmentUserName = appointmentUserName;
+    }
+
+    public int getAppointmentAnimalId() {
+        return appointmentAnimalId;
+    }
+
+    public void setAppointmentAnimalId(int appointmentAnimalId) {
+        this.appointmentAnimalId = appointmentAnimalId;
+    }
+
+    public String getAppointmentTechName() {
+        return appointmentTechName;
+    }
+
+    public void setAppointmentTechName(String appointmentTechName) {
+        this.appointmentTechName = appointmentTechName;
+    }
 
     /**
      * Overloaded constructor for Appointments to retrieve information from the database
@@ -44,7 +99,7 @@ public class Appointment {
      * @param appointmentId          appointment id
      * @param appointmentTitle       appointment title
      * @param appointmentDescription appointment description
-     * @param appointmentContact     associated appointment contact Id
+
      * @param appointmentType        appointment type
      * @param appointmentStart       appointment start date/time
      * @param appointmentEnd         appointment end date/time
@@ -52,12 +107,13 @@ public class Appointment {
      * @param appointmentUserId      associated appointment user id
      * @param appointmentLocation    appointment location
      */
-    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentContact,
+    // valid
+    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentTech,
                        String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, int appointmentUserId, String appointmentLocation) {
         this.appointmentId = appointmentId;
         this.appointmentTitle = appointmentTitle;
         this.appointmentDescription = appointmentDescription;
-        this.appointmentContact = appointmentContact;
+        this.appointmentTech = appointmentTech;
         this.appointmentType = appointmentType;
         this.appointmentStart = appointmentStart;
         this.appointmentEnd = appointmentEnd;
@@ -85,8 +141,8 @@ public class Appointment {
      * @param appointmentId          appointment id
      * @param appointmentTitle       appointment title
      * @param appointmentDescription appointment description
-     * @param appointmentContact     associated appointment contact Id
-     * @param appointmentContactName associated appointment contact name
+
+
      * @param appointmentType        appointment type
      * @param appointmentStart       appointment start date/time
      * @param appointmentEnd         appointment end date/time
@@ -94,18 +150,27 @@ public class Appointment {
      * @param appointmentUserId      associated appointment user id
      * @param appointmentLocation    appointment location
      */
-    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentContact, String appointmentContactName, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, int appointmentUserId, String appointmentLocation) {
+    public Appointment(int appointmentId, String appointmentTitle, String appointmentDescription, int appointmentTech, String appointmentTechName, String appointmentType, LocalDateTime appointmentStart, LocalDateTime appointmentEnd, int appointmentCustomerId, int appointmentUserId, String appointmentLocation) {
         this.appointmentId = appointmentId;
         this.appointmentTitle = appointmentTitle;
         this.appointmentDescription = appointmentDescription;
-        this.appointmentContact = appointmentContact;
-        this.appointmentContactName = appointmentContactName;
+        this.appointmentTech = appointmentTech;
+        this.appointmentTechName = appointmentTechName;
         this.appointmentType = appointmentType;
         this.appointmentStart = appointmentStart;
         this.appointmentEnd = appointmentEnd;
         this.appointmentCustomerId = appointmentCustomerId;
         this.appointmentUserId = appointmentUserId;
         this.appointmentLocation = appointmentLocation;
+    }
+
+
+    public int getAppointmentTech() {
+        return appointmentTech;
+    }
+
+    public void setAppointmentTech(int appointmentTech) {
+        this.appointmentTech = appointmentTech;
     }
 
     /**
@@ -162,31 +227,27 @@ public class Appointment {
         this.appointmentDescription = appointmentDescription;
     }
 
-    /**
-     * Getter for appointment contact Id
-     *
-     * @return appointmentContact
-     */
-    public int getAppointmentContact() {
-        return appointmentContact;
+
+
+
+
+    public String getAppointmentCustomerName() {
+        return appointmentCustomerName;
     }
 
-    /**
-     * Setter for appointment contact Id
-     *
-     * @param appointmentContact appointment contact Id
-     */
-    public void setAppointmentContact(int appointmentContact) {
-        this.appointmentContact = appointmentContact;
+    public void setAppointmentCustomerName(String appointmentCustomerName) {
+        this.appointmentCustomerName = appointmentCustomerName;
     }
 
-    public String getAppointmentContactName() {
-        return appointmentContactName;
+    public String getAppointmentUserName() {
+        return appointmentUserName;
     }
 
-    public void setAppointmentContactName(String appointmentContactName) {
-        this.appointmentContactName = appointmentContactName;
+    public void setAppointmentUserName(String appointmentUserName) {
+        this.appointmentUserName = appointmentUserName;
     }
+
+
 
     /**
      * Getter for appointment type
@@ -212,6 +273,7 @@ public class Appointment {
      * @return appointmentStart
      */
     public LocalDateTime getAppointmentStart() {
+
         return appointmentStart;
     }
 
@@ -319,9 +381,6 @@ public class Appointment {
      * Boolean method to check if an appointment for the selected contact is overlying with any existing appointments for
      * selected contact
      *
-     * @param customerId       customer id
-     * @param appointmentStart appointment start date/time
-     * @param appointmentEnd   appointment end date/time
      * @return true/false
      */
     public static boolean overlapCheck(int customerId, LocalDateTime appointmentStart, LocalDateTime appointmentEnd) {
@@ -335,26 +394,40 @@ public class Appointment {
                 continue;
             } else if (checkApptStart.isEqual(appointmentStart) || checkApptEnd.isEqual(appointmentEnd)) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
+
                 alert.setTitle("Warning Dialog");
-                alert.setContentText("ERROR: Appointments must not start or end at same time as existing customer appointments");
+                alert.setContentText("ERROR: Appointments must not start or end at same time\n" +
+                        " as existing customer appointments." + "\nAppointment ID: " + a.getAppointmentId() + "\n" +
+                        "Start Date and Time: " + a.getAppointmentStart() + "\n" +
+                        "End Date and Time: " + a.getAppointmentEnd());
                 alert.showAndWait();
                 return true;
             } else if (appointmentStart.isAfter(checkApptStart) && (appointmentStart.isBefore(checkApptEnd))) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
-                alert.setContentText("ERROR: Appointment start must not be during existing customer appointments");
+                alert.setContentText("ERROR: Appointments must not start or end at same time\n" +
+                        " as existing customer appointments." + "\nAppointment ID: " + a.getAppointmentId() + "\n" +
+                        "Start Date and Time: " + a.getAppointmentStart() + "\n" +
+                        "End Date and Time: " + a.getAppointmentEnd());
                 alert.showAndWait();
                 return true;
             } else if (appointmentEnd.isAfter(checkApptStart) && appointmentEnd.isBefore(checkApptEnd)) {
                 Alert alert = new Alert(Alert.AlertType.WARNING);
                 alert.setTitle("Warning Dialog");
-                alert.setContentText("ERROR: Appointment end must not be during existing customer appointments");
+                alert.setContentText("ERROR: Appointments must not start or end at same time\n" +
+                        " as existing customer appointments." + "\nAppointment ID: " + a.getAppointmentId() + "\n" +
+                        "Start Date and Time: " + a.getAppointmentStart() + "\n" +
+                        "End Date and Time: " + a.getAppointmentEnd());
                 alert.showAndWait();
                 return true;
             }
         }
         return false;
     }
+
+
+//
+
 
     /**
      * Boolean method that establishes business hours in eastern time and converts the users local timezone to ensure
@@ -455,12 +528,5 @@ public class Appointment {
      * @param actionEvent event for returning to appointments screen
      * @throws IOException addresses unhandled exceptions
      */
-    public static void backToAppointments(ActionEvent actionEvent) throws IOException {
-        new FXMLLoader();
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(Appointment.class.getResource("../view/Appointments.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
-    }
+
 }

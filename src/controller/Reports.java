@@ -1,8 +1,8 @@
 package controller;
 
+import DAO.AnimalDAO;
 import DAO.AppointmentDAO;
-import DAO.ContactDAO;
-import DAO.CountryDAO;
+import DAO.VetTechDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,7 +15,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import model.Appointment;
-import model.Contact;
+import model.VetTech;
 
 import java.io.IOException;
 import java.net.URL;
@@ -23,14 +23,27 @@ import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Objects;
 import java.util.ResourceBundle;
+
 /**
  * Reports class
  */
-
 public class Reports implements Initializable {
-    public TableView appointTypeTable;
-    public TableView appointMonthTable;
-    public TableView countryTable;
+    @FXML
+    private TableView appointTypeTable;
+    @FXML
+    private TableView appointMonthTable;
+    @FXML
+    private TableView countryTable;
+    @FXML
+    private Tab vetTechTab;
+    @FXML
+    private Tab breedTab;
+    @FXML
+    private TableColumn animalBreeds;
+    @FXML
+    private TableColumn breedTotal;
+    @FXML
+    private TableView breedTable;
     @FXML
     private TableColumn<Appointment, String> appointTotalType;
     @FXML
@@ -57,8 +70,9 @@ public class Reports implements Initializable {
     private TableColumn<Appointment, Integer> appointCustId;
     @FXML
     private TableColumn<Appointment, Integer> appointUserId;
+
     @FXML
-    private ComboBox<Contact> contactCombo;
+    private ComboBox<VetTech> contactCombo;
     @FXML
     private TableColumn appointCountry;
     @FXML
@@ -67,9 +81,10 @@ public class Reports implements Initializable {
     private Button backToMenu;
     @FXML
     private TableView contactTable;
+    MenuBar menuBar;
 
     // ObservableList that has all contacts from the database
-    ObservableList<Contact> contactList = ContactDAO.getAllContacts();
+    ObservableList<VetTech> contactList = VetTechDAO.getAllTechs();
 
     /**
      * Initializing Report tables and setting placeholders when no content is available in tables.
@@ -86,7 +101,7 @@ public class Reports implements Initializable {
         appointId.setCellValueFactory(new PropertyValueFactory<>("appointmentId"));
         appointTitle.setCellValueFactory(new PropertyValueFactory<>("appointmentTitle"));
         appointDescription.setCellValueFactory(new PropertyValueFactory<>("appointmentDescription"));
-        appointContact.setCellValueFactory(new PropertyValueFactory<>("appointmentContactName"));
+//        appointContact.setCellValueFactory(new PropertyValueFactory<>("appointmentTechName"));
         appointStart.setCellValueFactory(new PropertyValueFactory<>("appointmentStart"));
         appointEnd.setCellValueFactory(new PropertyValueFactory<>("appointmentEnd"));
         appointCustId.setCellValueFactory(new PropertyValueFactory<>("appointmentCustomerId"));
@@ -105,12 +120,11 @@ public class Reports implements Initializable {
         appointTypeTable.setItems(AppointmentDAO.appointmentType());
         appointTotalType.setCellValueFactory(new PropertyValueFactory<>("appointmentType"));
         appointTypeTotal.setCellValueFactory(new PropertyValueFactory<>("appointmentTypeTotal"));
-
-        // Contacts by Country
-        countryTable.setItems(CountryDAO.countryTotals());
-        countryTable.setPlaceholder(new Label("No data for Appointments by Country is available."));
-        appointCountryTotal.setCellValueFactory(new PropertyValueFactory<>("countryMonthTotal"));
-        appointCountry.setCellValueFactory(new PropertyValueFactory<>("countryMonth"));
+//
+//        breedTable.setItems(AnimalDAO.breedTotals());
+//        breedTable.setPlaceholder(new Label("No data for Breeds is available at this time."));
+//        breedTotal.setCellValueFactory(new PropertyValueFactory<>("breedTotal"));
+//        animalBreeds.setCellValueFactory(new PropertyValueFactory<>("animalBreed2"));
     }
 
     /**
@@ -122,33 +136,61 @@ public class Reports implements Initializable {
      */
     public void contactPopulate(ActionEvent actionEvent) throws SQLException {
         // Getting contact name and converting it to contact ID to obtain associated appointments
-        String contactName = String.valueOf(contactCombo.getValue());
-        int contactId = ContactDAO.returnContactId(contactName);
-        if (AppointmentDAO.getContactAppointment(contactId).isEmpty()) {
-            contactTable.setPlaceholder(new Label(contactName + " has no appointments."));
+        String techName = String.valueOf(contactCombo.getValue());
+        int techId = VetTechDAO.returnVetTech(techName);
+        if (AppointmentDAO.getTechAppointment(techId).isEmpty()) {
+            contactTable.setPlaceholder(new Label(techName + " has no appointments."));
             contactTable.refresh();
             for (int i = 0; i < contactTable.getItems().size(); i++) {
                 contactTable.getItems().clear();
-                contactTable.setPlaceholder(new Label(contactName + " has no appointments."));
+                contactTable.setPlaceholder(new Label(techName + " has no appointments."));
             }
         } else {
-            contactTable.setItems(AppointmentDAO.getContactAppointment(contactId));
+            contactTable.setItems(AppointmentDAO.getTechAppointment(techId));
         }
     }
 
-    /**
-     * Action event to take user back to the main menu when button is pressed
-     *
-     * @param actionEvent event for backToMenu button
-     * @throws IOException addresses unhandled exception for load
-     */
-    public void backToMenu(ActionEvent actionEvent) throws IOException {
-        new FXMLLoader();
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Menu.fxml")));
+
+    public void customerScreen(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
         Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+
+    }
+
+    public void animalScreen(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Animals.fxml")));
+        Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.centerOnScreen();
         stage.show();
     }
+
+    public void appointmentScreen(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Appointments.fxml")));
+        Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+    public void reportsScreen(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Reports.fxml")));
+        Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+
 }

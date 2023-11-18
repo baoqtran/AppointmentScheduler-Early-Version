@@ -10,10 +10,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-/**
- * Contact SQL queries to obtain customer information from database
- */
 
+/**
+ * Customer SQL queries to access customer information in database
+ *
+ */
 public class CustomerDAO {
 
     /**
@@ -47,7 +48,32 @@ public class CustomerDAO {
         }
         return customerList;
     }
-
+    public static ObservableList<Customer> refreshCustomerList() {
+        ObservableList<Customer> customerListRefresh = FXCollections.observableArrayList();
+        try {
+            String sql = "SELECT customers.Customer_ID, customers.Customer_Name, customers.Address, customers.Create_Date, customers.Last_Update, customers.Created_By, customers.Last_Updated_By, customers.Postal_Code, customers.Phone, customers.Division_ID, first_level_divisions.Division, first_level_divisions.Country_ID, countries.Country FROM customers JOIN first_level_divisions ON customers.Division_ID = first_level_divisions.Division_ID JOIN countries ON countries.Country_ID = first_level_divisions.Country_ID ORDER BY customers.Customer_ID ";
+            PreparedStatement ps = JDBC.connection.prepareStatement(sql);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                int customerId = rs.getInt("Customer_ID");
+                String customerName = rs.getString("Customer_Name");
+                String customerAddress = rs.getString("Address");
+                String customerPostalCode = rs.getString("Postal_Code");
+                String customerPhone = rs.getString("Phone");
+                String createdBy = rs.getString("Created_By");
+                String lastUpdatedBy = rs.getString("Last_Updated_By");
+                int customerDivisionId = rs.getInt("Division_ID");
+                String customerDivisionName = rs.getString("Division");
+                int customerCountryId = rs.getInt("Country_ID");
+                String customerCountryName = rs.getString("Country");
+                Customer c = new Customer(customerName, customerAddress, customerPostalCode, customerPhone, createdBy, lastUpdatedBy, customerDivisionId, customerDivisionName, customerCountryId, customerCountryName, customerId);
+                customerListRefresh.add(c);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return customerListRefresh;
+    }
 
     /**
      * SQL Query that deletes customer from database based on selected customer Id

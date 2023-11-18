@@ -10,7 +10,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * User queries for database for valid login with authorization.
+ * User queries for database to ensure appropriate credentials and a valid login
+ *
  */
 
 public class UserDAO {

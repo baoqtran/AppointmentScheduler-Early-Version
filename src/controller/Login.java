@@ -10,6 +10,8 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.stage.Stage;
 import model.Appointment;
 
@@ -25,10 +27,10 @@ import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static DAO.UserDAO.*;
+
 /**
  * Login class
  */
-
 
 public class Login implements Initializable {
 
@@ -49,6 +51,8 @@ public class Login implements Initializable {
     @FXML
     private Label loginTitle;
     boolean loginSuccess = false;
+    @FXML
+    private ImageView imView;
 
     // Loads language bundle to convert languages based on user's system language
     ResourceBundle langBundle = ResourceBundle.getBundle("language/lang");
@@ -74,6 +78,9 @@ public class Login implements Initializable {
         loginTitle.setText(langBundle.getString("SchedulingApplication"));
         loginButton.setText(langBundle.getString("Login"));
         cancelButton.setText(langBundle.getString("Cancel"));
+        imView.setImage(
+                new Image("logo.png")
+        );
     }
 
     /**
@@ -109,8 +116,9 @@ public class Login implements Initializable {
             int userId = getUserId(User_Name);
             ObservableList<Appointment> userAppointments = AppointmentDAO.getUserAppointments(userId);
             new FXMLLoader();
-            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Menu.fxml")));
+            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/view/Customers.fxml")));
             Scene scene = new Scene(parent);
+            parent.getStylesheets().add(this.getClass() .getResource("/test.css").toExternalForm());
             Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
             stage.setScene(scene);
             stage.centerOnScreen();
@@ -185,7 +193,7 @@ public class Login implements Initializable {
      */
     public void loginActivity() throws IOException {
         FileWriter fwritter = new FileWriter(logActivity.getFileName(), true);
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy hh:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MM-dd-yyyy HH:mm:ss");
         ZoneId localZone = ZoneId.systemDefault();
         if (loginSuccess) {
             fwritter.write(txtFieldUserName.getText() + " has successfully logged in on " + formatter.format(currentTime));

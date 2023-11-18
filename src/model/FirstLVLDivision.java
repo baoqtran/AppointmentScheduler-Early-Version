@@ -1,10 +1,11 @@
 package model;
+
 import java.time.LocalDateTime;
 
 /**
- * Model for FirstLVLDivision
+ * Model class for First Level Divisions
+ *
  */
-
 public class FirstLVLDivision {
 
     private int divisionID;

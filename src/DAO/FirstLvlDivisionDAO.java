@@ -12,9 +12,9 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 
 /**
- * Contact SQL queries to obtain first level division information from database
+ * First level division queries to access database
+ *
  */
-
 public class FirstLvlDivisionDAO {
     /**
      * SQL query to obtain all division ID's with observablelist

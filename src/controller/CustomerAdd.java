@@ -5,11 +5,8 @@ import DAO.CustomerDAO;
 import DAO.FirstLvlDivisionDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
@@ -20,13 +17,12 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.time.LocalDateTime;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 /**
- * Customer Add class
+ * CustomerAdd class
+ *
  */
-
 public class CustomerAdd implements Initializable {
     @FXML
     private TextField customerIDTextField;
@@ -92,6 +88,8 @@ public class CustomerAdd implements Initializable {
      */
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
         backToCustomers(actionEvent);
+
+
     }
 
     /**
@@ -126,10 +124,7 @@ public class CustomerAdd implements Initializable {
      * @throws IOException addresses unhandled exceptions
      */
     public void backToCustomers(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 }

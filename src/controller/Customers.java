@@ -4,6 +4,7 @@ import DAO.AppointmentDAO;
 import DAO.CustomerDAO;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -12,7 +13,10 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Region;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 import model.Appointment;
 import model.Country;
 import model.Customer;
@@ -22,13 +26,18 @@ import java.net.URL;
 import java.sql.SQLException;
 import java.util.Objects;
 import java.util.ResourceBundle;
-/**
- * Customer class
- */
 
+/**
+ * Customers class
+ */
 public class Customers implements Initializable {
 
-    public TableColumn<Country, Integer> custCountryCol;
+    @FXML
+    private TableColumn<Country, Integer> custCountryCol;
+    @FXML
+    private javafx.scene.control.Menu reportMenu;
+    @FXML
+    private MenuBar menuBar;
     @FXML
     private TableView<Customer> custTable;
     @FXML
@@ -136,12 +145,27 @@ public class Customers implements Initializable {
      * @throws IOException addresses unhandled exception for load
      */
     public void actionCustAdd(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/CustomerAdd.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.centerOnScreen();
-        stage.show();
+        Stage st = new Stage();
+        st.initModality(Modality.APPLICATION_MODAL);
+        st.setTitle("Happy Friends Scheduling");
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CustomerAdd.fxml"));
+        Region root = (Region) loader.load();
+        Scene scene = new Scene(root);
+        st.setScene(scene);
+        scene.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
+        CustomerAdd mainController = loader.<CustomerAdd>getController();
+        st.centerOnScreen();
+        st.show();
+        st.setOnHidden(new EventHandler<WindowEvent>() {
+            @Override
+            public void handle(WindowEvent windowEvent) {
+                custTable.refresh();
+                custTable.setItems(CustomerDAO.getCustomerList());
+                custTable.refresh();
+
+            }
+        });
+
     }
 
     /**
@@ -154,16 +178,26 @@ public class Customers implements Initializable {
      */
     public void actionCustUpdate(ActionEvent actionEvent) throws IOException, SQLException {
         if (custTable.getSelectionModel().getSelectedItem() != null) {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(getClass().getResource("/view/CustomerModify.fxml"));
-            loader.load();
+            Stage st = new Stage();
+            st.initModality(Modality.APPLICATION_MODAL);
+            st.setTitle("Happy Friends Scheduling");
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CustomerModify.fxml"));
+            Region root = (Region) loader.load();
+            Scene scene = new Scene(root);
+            st.setScene(scene);
+            scene.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
             CustomerModify MCController = loader.getController();
             MCController.getCustomerInfo(custTable.getSelectionModel().getSelectedItem());
-            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
-            Parent scene = loader.getRoot();
-            stage.setScene(new Scene(scene));
-            stage.centerOnScreen();
-            stage.show();
+            st.centerOnScreen();
+            st.show();
+            st.setOnHidden(new EventHandler<WindowEvent>() {
+                @Override
+                public void handle(WindowEvent windowEvent) {
+                    custTable.refresh();
+                    custTable.setItems(CustomerDAO.getCustomerList());
+                    custTable.refresh();
+                }
+            });
         } else {
             helper.ErrorMsg.getError(7);
         }
@@ -185,6 +219,7 @@ public class Customers implements Initializable {
         custPhoneCol.setCellValueFactory(new PropertyValueFactory<>("customerPhone"));
         custFirstCol.setCellValueFactory(new PropertyValueFactory<>("customerDivisionName"));
         custCountryCol.setCellValueFactory(new PropertyValueFactory<>("customerCountryName"));
+        custTable.setPlaceholder(new Label("No Customers available."));
     }
 
     /**
@@ -197,6 +232,49 @@ public class Customers implements Initializable {
         new FXMLLoader();
         Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Menu.fxml")));
         Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+
+    public void customerScreen(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
+        Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+
+    }
+
+    public void animalScreen(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Animals.fxml")));
+        Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+    public void appointmentScreen(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Appointments.fxml")));
+        Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
+        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
+        stage.setScene(scene);
+        stage.centerOnScreen();
+        stage.show();
+    }
+
+    public void reportsScreen(ActionEvent actionEvent) throws IOException {
+        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Reports.fxml")));
+        Scene scene = new Scene(parent);
+        parent.getStylesheets().add(this.getClass().getResource("/test.css").toExternalForm());
         Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
         stage.setScene(scene);
         stage.centerOnScreen();

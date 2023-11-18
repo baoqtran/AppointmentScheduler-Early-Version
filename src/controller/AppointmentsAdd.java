@@ -1,9 +1,6 @@
 package controller;
 
-import DAO.AppointmentDAO;
-import DAO.ContactDAO;
-import DAO.CustomerDAO;
-import DAO.UserDAO;
+import DAO.*;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -12,10 +9,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.DatePicker;
 import javafx.scene.control.TextField;
-import model.Appointment;
-import model.Contact;
-import model.Customer;
-import model.User;
+import javafx.stage.Stage;
+import model.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -24,11 +19,16 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.ResourceBundle;
-/**
- * Appointments Add class
- */
 
+/**
+ * AppointmentsAdd class
+ *
+ */
 public class AppointmentsAdd implements Initializable {
+    @FXML
+    private ComboBox<Animal> animalCombo;
+    @FXML
+    private ComboBox typeCombo;
     @FXML
     private TextField appointmentIDTextField;
     @FXML
@@ -40,7 +40,7 @@ public class AppointmentsAdd implements Initializable {
     @FXML
     private TextField appointTypeTextField;
     @FXML
-    private ComboBox<Contact> contactComboAdd;
+    private ComboBox<VetTech> contactComboAdd;
     @FXML
     private Button saveButton;
     @FXML
@@ -59,28 +59,29 @@ public class AppointmentsAdd implements Initializable {
     private ComboBox<Customer> customerComboAdd;
     private final int noOfDaysToAdd = 0;
 
+
     /**
      * Action event for save button that will verify and display the appropriate message for missing/blank fields,
      * along with verifying no overlapping appointments with respective customers and ensure appointments are scheduled
      * during business hours.
      *
      * @param actionEvent event for save button
-     * @throws IOException addresses unhandled exceptions
+     * @throws IOException  addresses unhandled exceptions
      * @throws SQLException addresses unhandled SQL exceptions
      */
     public void actionSaveButton(ActionEvent actionEvent) throws IOException, SQLException {
 
         String appointmentTitle = appointTitleTextField.getText();
         String appointmentDescription = appointDescriptionTextField.getText();
-        String appointmentType = appointTypeTextField.getText();
+        // String appointmentType = appointTypeTextField.getText();
 
         // Handling null pointer exception and alert message
-        Contact contact = contactComboAdd.getValue();
-        if (contact == null) {
+        VetTech tech = contactComboAdd.getValue();
+        if (tech == null) {
             helper.ErrorMsg.getError(24);
             return;
         }
-        int appointmentContact = contact.getContactId();
+        int appointmentTech = tech.getVetTechId();
 
         // Handling null pointer exception and alert message
         LocalDate startPicker = startDatePickerAdd.getValue();
@@ -127,23 +128,22 @@ public class AppointmentsAdd implements Initializable {
             return;
         }
         int appointmentUserId = userComboAdd.getValue().getUserID();
-        String appointmentLocation = appointLocationTextField.getText();
+        // String appointmentLocation = appointLocationTextField.getText();
+
+        int appointmentAnimalId = animalCombo.getValue().getAnimalId();
+        String type = typeCombo.getValue().toString();
 
         if (appointmentTitle.isBlank() || appointmentTitle.isEmpty()) {
             helper.ErrorMsg.getError(8);
         } else if (appointmentDescription.isBlank() || appointmentDescription.isEmpty()) {
             helper.ErrorMsg.getError(9);
-        } else if (appointmentType.isEmpty() || appointmentType.isBlank()) {
-            helper.ErrorMsg.getError(10);
-        } else if (appointmentLocation.isBlank() || appointmentLocation.isEmpty()) {
-            helper.ErrorMsg.getError(11);
         } else if (Appointment.businessHours(appointmentStart, appointmentEnd)) {
             return;
         } else if (Appointment.overlapCheck(appointmentCustomerId, appointmentStart, appointmentEnd)) {
             return;
         } else {
-            AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, appointmentLocation, appointmentType, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentContact);
-            Appointment.backToAppointments(actionEvent);
+            AppointmentDAO.addAppointment(appointmentTitle, appointmentDescription, type, appointmentStart, appointmentEnd, appointmentCustomerId, appointmentUserId, appointmentTech, appointmentAnimalId);
+            backToAppointments(actionEvent);
             helper.ErrorMsg.confirmation(5);
         }
     }
@@ -163,8 +163,8 @@ public class AppointmentsAdd implements Initializable {
     }
 
     /**
-     * LAMBDA EXPRESSION: Line 185 - Data Picker: takes value from start date and sets the value in the end date picker.
-     * LAMBDA EXPRESSION: Line 186 - Time Combo: takes the time selected in the start combo and sets the value in the end time for 30 minutes later
+     * LAMBDA EXPRESSION: Line 187 - Data Picker: takes value from start date and sets the value in the end date picker.
+     * LAMBDA EXPRESSION: Line 188 - Time Combo: takes the time selected in the start combo and sets the value in the end time for 30 minutes later
      * Initializes the combo box fields and sets the end date picker to match the start date picker. Also adds
      * 30 minutes automatically onto the end time based on the selected start time.
      *
@@ -176,8 +176,8 @@ public class AppointmentsAdd implements Initializable {
         appointmentIDTextField.setId(appointmentIDTextField.getId());
         startTimeComboAdd.setItems(Appointment.getTimes());
         endTimeComboAdd.setItems(Appointment.getTimes());
-        ObservableList<Contact> contactList = ContactDAO.getAllContacts();
-        contactComboAdd.setItems(contactList);
+        ObservableList<VetTech> techList = VetTechDAO.getAllTechs();
+        contactComboAdd.setItems(techList);
         ObservableList<User> userList = UserDAO.getUserList();
         userComboAdd.setItems(userList);
         ObservableList<Customer> customerList = CustomerDAO.getCustomerList();
@@ -195,6 +195,20 @@ public class AppointmentsAdd implements Initializable {
      * @throws IOException addresses unhandled exception
      */
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
-        Appointment.backToAppointments(actionEvent);
+        backToAppointments(actionEvent);
+    }
+
+    public void actionAnimalLoad(ActionEvent actionEvent) {
+        Customer c = customerComboAdd.getValue();
+        try {
+            animalCombo.setItems(AnimalDAO.displayAnimals(c.getCustomerId()));
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void backToAppointments(ActionEvent actionEvent) throws IOException {
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
     }
 }

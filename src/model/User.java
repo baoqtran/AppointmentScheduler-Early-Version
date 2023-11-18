@@ -1,9 +1,9 @@
 package model;
+
 import java.time.LocalDateTime;
 
-
 /**
- * Model for User
+ * Model Class for User's
  */
 public class User {
     private int userID;

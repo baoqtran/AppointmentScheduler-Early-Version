@@ -7,7 +7,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 /**
- * Error Message
+ * Error Messages class
+ *
  */
 
 public class ErrorMsg implements Initializable {
@@ -185,8 +186,8 @@ public class ErrorMsg implements Initializable {
 
             // Contact combo is empty alert
             case 24:
-                alert.setTitle("Please select a valid contact");
-                alert.setContentText("Please select a valid contact.");
+                alert.setTitle("Please select a valid Vet Tech");
+                alert.setContentText("Please select a valid Vet Tech.");
                 alert.showAndWait();
                 break;
 
@@ -194,6 +195,59 @@ public class ErrorMsg implements Initializable {
             case 25:
                 alert.setTitle("Error: Phone number");
                 alert.setContentText("Please enter a valid phone number.");
+                alert.showAndWait();
+                break;
+            case 26:
+                alert.setTitle("No Selection");
+                alert.setContentText("Please select an animal to continue.");
+                alert.showAndWait();
+                break;
+            case 27:
+                alert.setTitle("Animal Name is Blank");
+                alert.setContentText("Please enter an animal name.\n" +
+                        "This cannot be blank.");
+                alert.showAndWait();
+                break;
+            case 28:
+                alert.setTitle("Animal Age is Blank");
+                alert.setContentText("Please enter the animal's age.\n" +
+                        "This cannot be blank.");
+                alert.showAndWait();
+                break;
+            case 29:
+                alert.setTitle("Animal Age is invalid");
+                alert.setContentText("The animal age you have entered\n" +
+                        " is invalid. Please enter a valid\n" +
+                        " number.");
+                alert.showAndWait();
+                break;
+            case 30:
+                alert.setTitle("Animal Breed is blank");
+                alert.setContentText("Please enter an animal breed.\n" +
+                        "This cannot be blank.");
+                alert.showAndWait();
+                break;
+            case 31:
+                alert.setTitle("Animal Weight is invalid");
+                alert.setContentText("The animal weight you have entered\n" +
+                        " is invalid. Please enter a valid\n" +
+                        " number.");
+                alert.showAndWait();
+                break;
+            case 32:
+                alert.setTitle("Animal Weight is blank");
+                alert.setContentText("Please enter the animal's weight.\n" +
+                        "This cannot be blank.");
+                alert.showAndWait();
+                break;
+            case 33:
+                alert.setTitle("No Selection");
+                alert.setContentText("Please select a note to delete.\n");
+                alert.showAndWait();
+                break;
+            case 34:
+                alert.setTitle("No Selection");
+                alert.setContentText("Please select a note to edit.\n");
                 alert.showAndWait();
                 break;
             // Default that throws an error
@@ -247,6 +301,48 @@ public class ErrorMsg implements Initializable {
                 alert.setTitle("Appointment has been successfully added");
                 alert.setHeaderText("Success");
                 alert.setContentText("Appointment has been successfully added. ");
+                alert.showAndWait();
+                break;
+            case 6:
+                alert.setTitle("Note has been successfully modified");
+                alert.setHeaderText("Success");
+                alert.setContentText("Note has been successfully modified. ");
+                alert.showAndWait();
+                break;
+            case 7:
+                alert.setTitle("Note has been successfully added");
+                alert.setHeaderText("Success");
+                alert.setContentText("Note has been successfully added. ");
+                alert.showAndWait();
+                break;
+            case 8:
+                alert.setTitle("Customer has been successfully modified");
+                alert.setHeaderText("Success");
+                alert.setContentText("Customer has been successfully modified. ");
+                alert.showAndWait();
+                break;
+            case 9:
+                alert.setTitle("Animal has been successfully added");
+                alert.setHeaderText("Success");
+                alert.setContentText("Animal has been successfully added. ");
+                alert.showAndWait();
+                break;
+            case 10:
+                alert.setTitle("Note has been successfully deleted");
+                alert.setHeaderText("Success");
+                alert.setContentText("Note has been successfully deleted. ");
+                alert.showAndWait();
+                break;
+            case 11:
+                alert.setTitle("Animal has been successfully modified");
+                alert.setHeaderText("Success");
+                alert.setContentText("Animal has been successfully modified. ");
+                alert.showAndWait();
+                break;
+            case 12:
+                alert.setTitle("Animal has been successfully deleted");
+                alert.setHeaderText("Success");
+                alert.setContentText("Animal has been successfully deleted. ");
                 alert.showAndWait();
                 break;
         }

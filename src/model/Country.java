@@ -1,9 +1,9 @@
 package model;
 
 /**
- * Model for Country
+ * Model for Countries
+ *
  */
-
 public class Country {
     private int countryId;
     private String countryName;
@@ -22,7 +22,7 @@ public class Country {
     }
 
     /**
-     * Overloaded constructor for Country used in CountryDAO that gets all countries to an observable list
+     * Overloaded constructor for Country used in CountryDAO that gets all countries to an observablelist
      *
      * @param countryId   country id
      * @param countryName country name

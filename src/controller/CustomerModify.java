@@ -5,11 +5,7 @@ import DAO.CustomerDAO;
 import DAO.FirstLvlDivisionDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -22,14 +18,13 @@ import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 import static java.time.LocalDateTime.now;
-/**
- * Customer Modify class
- */
 
+/**
+ * CustomerModify class
+ */
 public class CustomerModify implements Initializable {
     @FXML
     private TextField customerIDTextField;
@@ -96,13 +91,10 @@ public class CustomerModify implements Initializable {
             String lastUpdatedBy = "script";
             Timestamp lastUpdated = Timestamp.valueOf(now());
             CustomerDAO.updateCustomer(customerId, customerName, customerAddress, customerPostalCode, customerPhone, lastUpdatedBy, lastUpdated, customerDivisionId, countryId);
-
-            Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
-            Scene scene = new Scene(parent);
-            Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-            stage.setScene(scene);
-            stage.show();
-        } catch (NumberFormatException | IOException e) {
+            helper.ErrorMsg.confirmation(8);
+            Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+            stage.close();
+        } catch (NumberFormatException e) {
             throw new RuntimeException(e);
         }
     }
@@ -114,11 +106,9 @@ public class CustomerModify implements Initializable {
      * @throws IOException addresses unhandled exception for load
      */
     public void actionCancelButton(ActionEvent actionEvent) throws IOException {
-        Parent parent = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("../view/Customers.fxml")));
-        Scene scene = new Scene(parent);
-        Stage stage = (Stage) ((Node) actionEvent.getSource()).getScene().getWindow();
-        stage.setScene(scene);
-        stage.show();
+        Stage stage = (Stage) ((Button) actionEvent.getSource()).getScene().getWindow();
+        stage.close();
+
     }
 
     /**
