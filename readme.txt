@@ -13,6 +13,8 @@ How to run the program:
 Username: test
 Password: test
 
+
+
 Launch the program, enter username with password (case sensitive) on the login screen, click the login button, or cancel to exit the program.
 The system will pop up the alert if the username and/or password are incorrect, then let the user to try again.
 Once the user has been validated and logged in - an alert will be displayed letting the user know if there are any appointments within 15 minutes or not.
