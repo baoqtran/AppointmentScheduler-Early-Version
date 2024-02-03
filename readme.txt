@@ -36,10 +36,10 @@ any appointments within 15 minutes or not.</p>
 
 
 <h2>MAIN CUSTOMER MENU:</h2>
-<p>After the appointment reminder notification, the user will be directed to the main customer menu where 4 buttons will appear on the screen.
-This will display a table with all the available customer information, it also comes with 3 buttons below (Add, Update, Delete).
-The add button will create a new customer, the update button will update an existing customer,
-and the delete button will remove an existing customer from the system.
+<p>After the appointment reminder notification, the user will be directed to the main customer menu where 4 tabs will appear on the top left of the screen
+(Customer, Animals, Appointments, Reports). This screen displays a table with all the available customer information, it also comes with 3 buttons below (Add, Update, Delete).
+The add button will create a new customer, the update button will update an existing customer, and the delete button will remove an existing customer from the system.
+
 <img src="Screenshots/MAIN MENU.png" alt="alt text" title="MainMenu" />
 
 <img src="Screenshots/CUSTOMER - ADD.png" alt="alt text" title="CustomerAdd" />
@@ -48,10 +48,11 @@ and the delete button will remove an existing customer from the system.
 
 
 <h2>ANIMALS:</h2>
-<p>The animals button will display all existing animals information by default. This including animal name, type, age, weight...e.g,
-it also comes with 3 buttons below the table (Add Animal, Update Animal, Delete Animal).
-The add button create a new animal profile allow to add note, the update button will update an existing animal profile with three buttons to Edit Note, New Note and Delete Note, and
-the delete button will delete the selected animal profile from the system.
+<p>The animal’s tab will display all existing animal information by default. This includes animal name, type, age, weight... e.g.,
+it also comes with 3 buttons below the table (Add Animal, Update Animal, Delete Animal). The add button creates a new animal profile
+and allows to add note, the update button will update an existing animal profile with three buttons Edit Note, New Note, and Delete Note,
+and the delete button will delete the selected animal profile from the system.
+
 <img src="Screenshots/ANIMAL TABLE.png" alt="alt text" title="AnimalTable" />
 <img src="Screenshots/ANIMAL - ADD.png" alt="alt text" title="AnimalAdd" />
 <img src="Screenshots/ANIMAL - UPDATE.png" alt="alt text" title="AnimalUpdate" />
@@ -60,19 +61,23 @@ the delete button will delete the selected animal profile from the system.
 
 
 <h2>APPOINTMENT:</h2>
-<p>The appointment button will display all existing appointments by default. The user can search specific appointment via title, descriptions, vet tech, animal name...e.g
-from all appointments. By selecting each radio button on top of the search box, this will provide weekly appointments outlooks, and the
-monthly appointments outlooks, it also comes with 3 buttons below the table (Add Appointment, Update Appointment, Delete Appointment).
-The add button create a new appointment, the update button will update an existing appointment, and the delete button will delete the selected appointment from the system.
+<p>The appointment tab will display all existing appointments by default. The user can search specific appointments via titles,
+descriptions, vet tech, and animal names... e.g. from all appointments. Selecting each tab on top of the search box will provide
+weekly appointment outlooks and monthly appointment outlooks, it also comes with 3 buttons below the table (Add Appointment,
+Update Appointment, Delete Appointment). The add button creates a new appointment, the update button will update an existing appointment,
+and the delete button will delete the selected appointment from the system.
+
 <img src="Screenshots/APPOINTMENT TABLE.png" alt="alt text" title="AppTable" />
 <img src="Screenshots/APPOINTMENT - ADD.png" alt="alt text" title="AppAdd" />
 <img src="Screenshots/APPOINTMENT - UPDATE.png" alt="alt text" title="AppUpdate" />
 </p>
 
 <h2>REPORTS:</h2>
-<p>The report button will display the report list where there will be two tabs on the top of 2 tables. Appointment Totals, and Vet Tech Schedules, each tab will have a different report.
-The appointment totals tab displays the different appointment types and their associated totals. On the right side of the appointment totals tab, the appointment totals are broken down by month.
-The vet tech schedules tab has a combo box that allows you to select a vet tech and will display appointments associated with the content in the table view.
+<p>The report button will display the report list where there will be two tabs (Appointment Totals, and Vet Tech Schedules) on the top of two tables.
+Each tab will have a different report. The Appointment Totals tab displays the different appointment types and their associated totals.
+On the right side of the appointment totals tab, the appointment totals are broken down by month. The Vet Tech Schedules tab has
+a combo box that allows you to select a vet tech and will display appointments associated with the content in the table view.
+
 <img src="Screenshots/APP REPORT.png" alt="alt text" title="AppReport" />
 <img src="Screenshots/VET TECH REPORT.png" alt="alt text" title="VetReport" />
 </p>
